@@ -8,6 +8,8 @@ import {
   StatusBar,
 } from 'react-native';
 
+import './config/ReactoTronConfig';
+
 import {
   Header,
   LearnMoreLinks,
@@ -71,7 +73,7 @@ export default function App() {
           )}
           <View style={styles.body}>
             <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step Forteen</Text>
+              <Text style={styles.sectionTitle}>Step Fifteen</Text>
               <Text style={styles.sectionDescription}>
                 Edit <Text style={styles.highlight}>App.js</Text> to change this
                 screen and put some other content here.
