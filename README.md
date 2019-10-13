@@ -12,8 +12,12 @@ This will store the users in the device storage.
 ![Users](images/users.jpg)
 
 ## Browse your favorite user starred repos
-See all the repos that your favorite user follows.
+See all the repos that your favorite user follows having pull-to-refresh and inifinte scrolling features.
 ![Profile](images/profile.jpg)
+
+## Check a starred repo page
+Open the repo page in the integrated Webview in the app.
+![Repo](images/repo.jpg)
 
 # Quick start
 
