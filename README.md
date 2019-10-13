@@ -57,3 +57,17 @@ And in any case where an nonsen error message appears, close the app in the devi
 ````sh
 npx react-native start --reset-cache
 ````
+# Known issues
+
+## Autolinkning error message
+
+When running the application, the following log will be shown
+
+```
+error React Native CLI uses autolinking for native dependencies, but the following modules are linked manually:
+  - react-native-vector-icons (to unlink run: "react-native unlink react-native-vector-icons")
+This is likely happening when upgrading React Native from below 0.60 to 0.60 or above. Going forward, you can unlink this dependency via "react-native unlink <dependency>" and it will be included in your app automatically. If a library isn't compatible with autolinking, disregard this message and notify the library maintainers.
+Read more about autolinking: https://github.com/react-native-community/cli/blob/master/docs/autolinking.md
+```
+
+This is more of a warning than an error. This happens because we use `react-native-vector-icons` for some icons used in the application. But the application compiles and runs normally, so just ignore this message.
