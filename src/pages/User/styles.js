@@ -40,6 +40,8 @@ export const LoadingIndicator = styled(ActivityIndicator)`
   margin-top: 20px;
 `;
 
+export const LoadingMoreIndicator = styled(ActivityIndicator)``;
+
 export const Stars = styled.FlatList.attrs({
   showsVerticalScrollIndicator: false,
 })`
