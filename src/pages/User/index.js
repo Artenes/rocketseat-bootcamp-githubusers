@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { TouchableNativeFeedback } from 'react-native';
+
 import PropTypes from 'prop-types';
 import api from '../../services/api';
 
@@ -67,6 +69,11 @@ export default class User extends Component {
     });
   };
 
+  handleOpenRepo = repo => {
+    const { navigation } = this.props;
+    navigation.navigate('Repo', { repo });
+  };
+
   render() {
     const { navigation } = this.props;
     const { stars, loadingMore, refreshing } = this.state;
@@ -87,13 +94,15 @@ export default class User extends Component {
           onRefresh={this.refreshList}
           refreshing={refreshing}
           renderItem={({ item }) => (
-            <Starred>
-              <OwnerAvatar source={{ uri: item.owner.avatar_url }} />
-              <Info>
-                <Title>{item.name}</Title>
-                <Author>{item.owner.login}</Author>
-              </Info>
-            </Starred>
+            <TouchableNativeFeedback onPress={() => this.handleOpenRepo(item)}>
+              <Starred>
+                <OwnerAvatar source={{ uri: item.owner.avatar_url }} />
+                <Info>
+                  <Title>{item.name}</Title>
+                  <Author>{item.owner.login}</Author>
+                </Info>
+              </Starred>
+            </TouchableNativeFeedback>
           )}
         />
         {loadingMore && <LoadingMoreIndicator />}
@@ -105,5 +114,6 @@ export default class User extends Component {
 User.propTypes = {
   navigation: PropTypes.shape({
     getParam: PropTypes.func,
+    navigate: PropTypes.func,
   }).isRequired,
 };
