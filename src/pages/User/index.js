@@ -14,7 +14,6 @@ import {
   Info,
   Title,
   Author,
-  LoadingIndicator,
   LoadingMoreIndicator,
 } from './styles';
 
@@ -25,20 +24,19 @@ export default class User extends Component {
 
   state = {
     stars: [],
-    loading: false,
     loadingMore: false,
     refreshing: false,
     page: 1,
   };
 
   async componentDidMount() {
-    this.setState({ loading: true });
+    this.setState({ refreshing: true });
     const { navigation } = this.props;
     const user = navigation.getParam('user');
 
     const response = await api.get(`/users/${user.login}/starred`);
 
-    this.setState({ stars: response.data, loading: false });
+    this.setState({ stars: response.data, refreshing: false });
   }
 
   refreshList = async () => {
@@ -71,7 +69,7 @@ export default class User extends Component {
 
   render() {
     const { navigation } = this.props;
-    const { stars, loading, loadingMore, refreshing } = this.state;
+    const { stars, loadingMore, refreshing } = this.state;
     const user = navigation.getParam('user');
 
     return (
@@ -81,30 +79,24 @@ export default class User extends Component {
           <Name>{user.name}</Name>
           <Bio>{user.bio}</Bio>
         </Header>
-        {loading ? (
-          <LoadingIndicator />
-        ) : (
-          <>
-            <Stars
-              data={stars}
-              keyExtractor={star => String(star.id)}
-              onEndReachedThreshold={0.2}
-              onEndReached={this.loadMore}
-              onRefresh={this.refreshList}
-              refreshing={refreshing}
-              renderItem={({ item }) => (
-                <Starred>
-                  <OwnerAvatar source={{ uri: item.owner.avatar_url }} />
-                  <Info>
-                    <Title>{item.name}</Title>
-                    <Author>{item.owner.login}</Author>
-                  </Info>
-                </Starred>
-              )}
-            />
-            {loadingMore && <LoadingMoreIndicator />}
-          </>
-        )}
+        <Stars
+          data={stars}
+          keyExtractor={star => String(star.id)}
+          onEndReachedThreshold={0.2}
+          onEndReached={this.loadMore}
+          onRefresh={this.refreshList}
+          refreshing={refreshing}
+          renderItem={({ item }) => (
+            <Starred>
+              <OwnerAvatar source={{ uri: item.owner.avatar_url }} />
+              <Info>
+                <Title>{item.name}</Title>
+                <Author>{item.owner.login}</Author>
+              </Info>
+            </Starred>
+          )}
+        />
+        {loadingMore && <LoadingMoreIndicator />}
       </Container>
     );
   }
