@@ -1,12 +1,36 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { WebView } from 'react-native-webview';
 
-// import { Container } from './styles';
+import { LoadingIndicator } from './styles';
 
-export default function Repo() {
-  return <View />;
+export default class Repo extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: navigation.getParam('repo').name,
+  });
+
+  state = {
+    loading: false,
+  };
+
+  render() {
+    const { loading } = this.state;
+    const { navigation } = this.props;
+    return (
+      <>
+        <WebView
+          source={{ uri: navigation.getParam('repo').html_url }}
+          onLoadStart={() => this.setState({ loading: true })}
+          onLoadEnd={() => this.setState({ loading: false })}
+        />
+        {loading && <LoadingIndicator />}
+      </>
+    );
+  }
 }
 
-Repo.navigationOptions = ({ navigation }) => ({
-  title: navigation.getParam('repo').name,
-});
+Repo.propTypes = {
+  navigation: PropTypes.shape({
+    getParam: PropTypes.func,
+  }).isRequired,
+};
